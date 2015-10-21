@@ -63,6 +63,28 @@ public class FibonacciableTest {
         System.out.println("With elapsed: " + difference + " for " + p.x);
         assertEquals(p.y, result);
     }
+
+    @Test
+    public void testFibWithUpperLimit() {
+        int UPPER_LIMIT_TERM = 46;
+        int UPPER_LIMIT_FIB = 1836311903;
+        long lStartTime = System.nanoTime();
+        int result = this.fibDriver.fibWithMemoisation(UPPER_LIMIT_TERM);
+        long lEndTime = System.nanoTime();
+        long difference = lEndTime - lStartTime;
+        System.out.println("With elapsed: " + difference + " for " + UPPER_LIMIT_TERM);
+        assertEquals(UPPER_LIMIT_FIB, result);
+
+
+        lStartTime = System.nanoTime();
+        int resultWithout = this.fibDriver.fib(UPPER_LIMIT_TERM);
+        lEndTime = System.nanoTime();
+        long differenceWithout = lEndTime - lStartTime;
+        System.out.println("Without elapsed: " + differenceWithout + " for " + UPPER_LIMIT_TERM);
+        assertEquals(UPPER_LIMIT_FIB, resultWithout);
+
+        assertTrue(differenceWithout > difference);
+    }
 }
 
 class IntPair {
