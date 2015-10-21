@@ -13,18 +13,6 @@ public class FibMaxIntExperiment {
     }
 
     public BigInteger fib(int term) {
-/*        BigInteger[] fibSequence = new BigInteger[term];
-
-        for (int i = 0; i < term; i++) {
-            if (i < 2) {
-                fibSequence[i] = new BigInteger(Integer.toString(i));
-            } else {
-                fibSequence[i] = fibSequence[i-2].add(fibSequence[i-1]);
-            }
-        }
-
-        return fibSequence[term-1];*/
-
         BigInteger f0 = BigInteger.ZERO;
         BigInteger f1 = BigInteger.ONE;
         BigInteger fn = null;
