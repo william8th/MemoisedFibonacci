@@ -4,13 +4,13 @@ import redis.clients.jedis.Jedis;
  * Created by William Heng(dev) on 21/10/15.
  */
 public class Fibonacci implements Fibonacciable {
-    Jedis redis;
+    KVCache cache;
 
-    public Fibonacci(Jedis redis) {
-        this.redis = redis;
+    public Fibonacci(final KVCache cache) {
+        this.cache = cache;
     }
 
-    public int fib(int n) {
+    public int fib(final int n) {
         if (n < 2) {
             return n;
         } else {
@@ -18,7 +18,7 @@ public class Fibonacci implements Fibonacciable {
         }
     }
 
-    public int fibWithMemoisation(int n) {
+    public int fibWithMemoisation(final int n) {
         if (n < 2) {
             return n;
         } else {
@@ -28,13 +28,13 @@ public class Fibonacci implements Fibonacciable {
             int result = 0;
 
 
-            if (redis.exists(term)) {
-                result = Integer.parseInt(redis.get(term));
+            if (cache.exists(term)) {
+                result = Integer.parseInt(cache.get(term));
             } else {
                 result = fibWithMemoisation(n - 1) + fibWithMemoisation(n - 2);
 
                 // Cache the result
-                redis.set(term, Integer.toString(result));
+                cache.set(term, Integer.toString(result));
             }
 
             return result;

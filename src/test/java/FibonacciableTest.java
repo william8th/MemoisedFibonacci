@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
@@ -16,7 +17,8 @@ import static org.junit.Assert.*;
 @RunWith(Theories.class)
 public class FibonacciableTest {
     Fibonacciable fibDriver;
-    Jedis redis;
+    Jedis jedis;
+    RedisClient redis;
 
     @DataPoints
     public final static IntPair[] fibSequence() {
@@ -40,8 +42,14 @@ public class FibonacciableTest {
 
     @Before
     public void setUp() throws Exception {
-        this.redis = new Jedis("localhost");
+        this.jedis = new Jedis("localhost");
+        this.redis = new RedisClient(this.jedis);
         this.fibDriver = new Fibonacci(this.redis);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        this.jedis.close();
     }
 
     @Theory
